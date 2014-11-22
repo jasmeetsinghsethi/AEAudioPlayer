@@ -7,9 +7,17 @@
 //
 
 #import "ViewController.h"
+#import "AAudioPlayer.h"
 
-@interface ViewController ()
-
+@interface ViewController () <AAudioPlayerDelegate>
+{
+    NSMutableArray* audioFiles;
+    int index;
+    AAudioPlayer* player;
+    IBOutlet UIProgressView *progressBar;
+    
+    NSTimer* timer;
+}
 @end
 
 @implementation ViewController
@@ -17,11 +25,100 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+    audioFiles = [NSMutableArray new];
+    [audioFiles addObject:[[NSBundle mainBundle] URLForResource: @"short"
+                                                  withExtension: @"mp3"]];
+    [audioFiles addObject:[[NSBundle mainBundle] URLForResource: @"pianoman"
+                                                  withExtension: @"mp3"]];
+    [audioFiles addObject:[[NSBundle mainBundle] URLForResource: @"Dragula"
+                                                  withExtension: @"mp3"]];
+    [audioFiles addObject:[[NSBundle mainBundle] URLForResource: @"Greed"
+                                                  withExtension: @"mp3"]];
+    [audioFiles addObject:[[NSBundle mainBundle] URLForResource: @"I_Stand_Alone"
+                                                  withExtension: @"mp3"]];
+    
+    index = 0;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)playPausePressed:(id)sender
+{
+        if(player == nil)
+        {
+            progressBar.progress = 0.0;
+            NSError* playingError = nil;
+            player = [[AAudioPlayer alloc] initPCMBufferWithContentsOfURL:audioFiles[index] error:&playingError];
+            player.delegate = self;
+            if(playingError)
+            {
+                NSLog(@"Playing error %@",playingError);
+            }
+        }
+        
+        if(player.playing)
+        {
+            [player pause];
+            [timer invalidate];
+            timer = nil;
+        }
+        else
+        {
+            [player play];
+            
+            [timer invalidate];
+            timer = nil;
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateTime) userInfo:nil repeats:YES];
+            });
+        }
+}
+
+- (void)updateTime
+{
+    static int setTime = 5;
+    NSTimeInterval currentTime = player.currentTime;
+    NSTimeInterval duration = player.duration;
+    
+    NSLog(@"Current Time: %f Duration: %f",currentTime,duration);
+    
+    float progress = currentTime/duration;
+    progressBar.progress = progress;
+    
+    if(setTime-- == 0)
+    {
+        [player setCurrentTime:14.0];
+    }
+}
+
+- (IBAction)prevPressed:(id)sender
+{
+    [player stop];
+    index--;
+    if(index < 0)
+        index = (int)audioFiles.count-1;
+    player = nil;
+    [self playPausePressed:nil];
+}
+- (IBAction)nextPressed:(id)sender
+{
+    [player stop];
+    index++;
+    if(index >= audioFiles.count)
+        index = 0;
+    player = nil;
+    [self playPausePressed:nil];
+}
+
+-(void)audioPlayerDidFinishPlaying:(AAudioPlayer *)player successfully:(BOOL)flag
+{
+    [self nextPressed:nil];
+    NSLog(@"Starting new song");
 }
 
 @end

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="ufC-wZ-h7g">
             <objects>
-                <viewController id="vXZ-lx-hvc" customClass="ViewController" customModuleProvider="" sceneMemberID="viewController">
+                <viewController id="vXZ-lx-hvc" customClass="ViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="jyV-Pf-zRb"/>
                         <viewControllerLayoutGuide type="bottom" id="2fi-mo-0CV"/>
@@ -15,11 +15,136 @@
                     <view key="view" contentMode="scaleToFill" id="kh9-bI-dsS">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FOg-ke-qvh">
+                                <rect key="frame" x="154" y="285" width="46" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="71" id="fGD-6S-hzl"/>
+                                    <constraint firstAttribute="height" constant="37" id="qFY-TU-rEY"/>
+                                </constraints>
+                                <state key="normal" title="Start/Stop">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="fGD-6S-hzl"/>
+                                        <exclude reference="qFY-TU-rEY"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="fGD-6S-hzl"/>
+                                        <include reference="qFY-TU-rEY"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="playPausePressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="5ln-3w-9Cs"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pvt-tg-wSO">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="46" id="WI1-n3-SWm"/>
+                                    <constraint firstAttribute="width" constant="53" id="hk5-fn-st0"/>
+                                </constraints>
+                                <state key="normal" title="Next">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="WI1-n3-SWm"/>
+                                        <exclude reference="hk5-fn-st0"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="WI1-n3-SWm"/>
+                                        <include reference="hk5-fn-st0"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="nextPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="wVJ-fl-sNs"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AP8-0t-46o">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="51" id="I4Y-S0-jBj"/>
+                                    <constraint firstAttribute="height" constant="46" id="NSs-Tg-IIq"/>
+                                </constraints>
+                                <state key="normal" title="Prev">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="I4Y-S0-jBj"/>
+                                        <exclude reference="NSs-Tg-IIq"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="I4Y-S0-jBj"/>
+                                        <include reference="NSs-Tg-IIq"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="prevPressed:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="jpJ-pa-kQO"/>
+                                </connections>
+                            </button>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="gSy-tX-nEf">
+                                <rect key="frame" x="0.0" y="-2" width="150" height="2"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="74" y="254" width="252" height="2"/>
+                                </variation>
+                            </progressView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="AP8-0t-46o" firstAttribute="centerY" secondItem="FOg-ke-qvh" secondAttribute="centerY" id="ExH-K0-11u"/>
+                            <constraint firstAttribute="centerY" secondItem="FOg-ke-qvh" secondAttribute="centerY" id="Htd-6D-vKK"/>
+                            <constraint firstItem="AP8-0t-46o" firstAttribute="centerY" secondItem="pvt-tg-wSO" secondAttribute="centerY" id="I1V-9P-CbR"/>
+                            <constraint firstItem="pvt-tg-wSO" firstAttribute="leading" secondItem="FOg-ke-qvh" secondAttribute="trailing" constant="10" id="J7G-Ew-4BK"/>
+                            <constraint firstItem="FOg-ke-qvh" firstAttribute="leading" secondItem="AP8-0t-46o" secondAttribute="trailing" constant="8" id="rf4-Cr-Br3"/>
+                            <constraint firstAttribute="centerX" secondItem="FOg-ke-qvh" secondAttribute="centerX" id="zG6-zu-6Uw"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="pvt-tg-wSO"/>
+                                <exclude reference="AP8-0t-46o"/>
+                                <exclude reference="gSy-tX-nEf"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="ExH-K0-11u"/>
+                                <exclude reference="I1V-9P-CbR"/>
+                                <exclude reference="Htd-6D-vKK"/>
+                                <exclude reference="rf4-Cr-Br3"/>
+                                <exclude reference="zG6-zu-6Uw"/>
+                                <exclude reference="J7G-Ew-4BK"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="pvt-tg-wSO"/>
+                                <include reference="AP8-0t-46o"/>
+                                <include reference="gSy-tX-nEf"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="ExH-K0-11u"/>
+                                <include reference="I1V-9P-CbR"/>
+                                <include reference="Htd-6D-vKK"/>
+                                <include reference="rf4-Cr-Br3"/>
+                                <include reference="zG6-zu-6Uw"/>
+                                <include reference="J7G-Ew-4BK"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <connections>
+                        <outlet property="progressBar" destination="gSy-tX-nEf" id="tYt-o2-QjS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="328.5" y="339"/>
         </scene>
     </scenes>
 </document>
