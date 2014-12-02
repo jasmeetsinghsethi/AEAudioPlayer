@@ -41,18 +41,12 @@
     audioFiles = [NSMutableArray new];
     [audioFiles addObject:[[NSBundle mainBundle] URLForResource: @"short"
                                                   withExtension: @"mp3"]];
-    [audioFiles addObject:[[NSBundle mainBundle] URLForResource: @"pianoman"
-                                                  withExtension: @"mp3"]];
-    [audioFiles addObject:[[NSBundle mainBundle] URLForResource: @"Dragula"
-                                                  withExtension: @"mp3"]];
-    [audioFiles addObject:[[NSBundle mainBundle] URLForResource: @"Greed"
-                                                  withExtension: @"mp3"]];
-    [audioFiles addObject:[[NSBundle mainBundle] URLForResource: @"I_Stand_Alone"
-                                                  withExtension: @"mp3"]];
+    //[audioFiles addObject:[[NSBundle mainBundle] URLForResource:@"BachGavotteShort" withExtension:@"mp3"]];
+    
     
     index = 0;
     
-    frequencyLabel1.text = [NSString stringWithFormat:@"%d",[AAudioPlayer getBandFrequencyWithBandIndex:0]];
+    /*frequencyLabel1.text = [NSString stringWithFormat:@"%d",[AAudioPlayer getBandFrequencyWithBandIndex:0]];
     frequencyLabel2.text = [NSString stringWithFormat:@"%d",[AAudioPlayer getBandFrequencyWithBandIndex:1]];
     frequencyLabel3.text = [NSString stringWithFormat:@"%d",[AAudioPlayer getBandFrequencyWithBandIndex:2]];
     frequencyLabel4.text = [NSString stringWithFormat:@"%d",[AAudioPlayer getBandFrequencyWithBandIndex:3]];
@@ -61,7 +55,7 @@
     frequencyLabel7.text = [NSString stringWithFormat:@"%d",[AAudioPlayer getBandFrequencyWithBandIndex:6]];
     frequencyLabel8.text = [NSString stringWithFormat:@"%d",[AAudioPlayer getBandFrequencyWithBandIndex:7]];
     frequencyLabel9.text = [NSString stringWithFormat:@"%d",[AAudioPlayer getBandFrequencyWithBandIndex:8]];
-    frequencyLabel10.text = [NSString stringWithFormat:@"%d",[AAudioPlayer getBandFrequencyWithBandIndex:9]];
+    frequencyLabel10.text = [NSString stringWithFormat:@"%d",[AAudioPlayer getBandFrequencyWithBandIndex:9]];*/
 }
 
 - (IBAction)setFrequency:(UISlider*)sender {
@@ -128,7 +122,7 @@
     
     if(setTime-- == 0)
     {
-        //[player setCurrentTime:14.0];
+        [player setCurrentTime:14.0];
     }
 }
 

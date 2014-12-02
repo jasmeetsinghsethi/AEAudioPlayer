@@ -36,6 +36,7 @@
     if(self)
     {
         seekNewTimePosition = -1;
+        seekOldFramePosition = -1;
         _url = url;
         [self startBufferingURL:url AtOffset:0 error:outError];
     }
@@ -153,7 +154,7 @@
 
 - (void)play
 {
-    if(DEBUG) NSLog(@"Play");
+    if(DEBUG) NSLog(@"Play %d %d %d",seekNewTimePosition, seekOldFramePosition, self.currentTime);
     
     [self stopBufferLoop];
     
@@ -161,6 +162,11 @@
     
     if(seekNewTimePosition != -1)
     {
+        if(seekNewTimePosition == 0)
+        {
+            seekNewTimePosition = self.currentTime;
+        }
+        
         AVAudioTime* newTime = [[AVAudioTime alloc] initWithSampleTime:seekNewTimePosition atRate:_file.fileFormat.sampleRate];
         [_player playAtTime:newTime];
     }

@@ -15,12 +15,6 @@
 		2E3270A11A1EECEC009892D4 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E32709F1A1EECEC009892D4 /* LaunchScreen.xib */; };
 		2E3270AD1A1EECEC009892D4 /* AAudioPlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3270AC1A1EECEC009892D4 /* AAudioPlayerTests.m */; };
 		2E3270B81A1EEE21009892D4 /* AAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3270B71A1EEE21009892D4 /* AAudioPlayer.m */; };
-		2E3270BE1A1EF0B5009892D4 /* Awake.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E3270B91A1EF0B5009892D4 /* Awake.mp3 */; };
-		2E3270BF1A1EF0B5009892D4 /* Dragula.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E3270BA1A1EF0B5009892D4 /* Dragula.mp3 */; };
-		2E3270C01A1EF0B5009892D4 /* Greed.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E3270BB1A1EF0B5009892D4 /* Greed.mp3 */; };
-		2E3270C11A1EF0B5009892D4 /* Headstrong.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E3270BC1A1EF0B5009892D4 /* Headstrong.mp3 */; };
-		2E3270C21A1EF0B5009892D4 /* I_Stand_Alone.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E3270BD1A1EF0B5009892D4 /* I_Stand_Alone.mp3 */; };
-		2E3270CB1A200C98009892D4 /* pianoman.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E3270CA1A200C98009892D4 /* pianoman.mp3 */; };
 		2E3270CD1A200E96009892D4 /* BachGavotteShort.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E3270CC1A200E96009892D4 /* BachGavotteShort.mp3 */; };
 		2E3270CF1A200F3F009892D4 /* short.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E3270CE1A200F3F009892D4 /* short.mp3 */; };
 /* End PBXBuildFile section */
@@ -51,12 +45,6 @@
 		2E3270AC1A1EECEC009892D4 /* AAudioPlayerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AAudioPlayerTests.m; sourceTree = "<group>"; };
 		2E3270B61A1EEE21009892D4 /* AAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAudioPlayer.h; sourceTree = "<group>"; };
 		2E3270B71A1EEE21009892D4 /* AAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAudioPlayer.m; sourceTree = "<group>"; };
-		2E3270B91A1EF0B5009892D4 /* Awake.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Awake.mp3; sourceTree = "<group>"; };
-		2E3270BA1A1EF0B5009892D4 /* Dragula.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Dragula.mp3; sourceTree = "<group>"; };
-		2E3270BB1A1EF0B5009892D4 /* Greed.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Greed.mp3; sourceTree = "<group>"; };
-		2E3270BC1A1EF0B5009892D4 /* Headstrong.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Headstrong.mp3; sourceTree = "<group>"; };
-		2E3270BD1A1EF0B5009892D4 /* I_Stand_Alone.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = I_Stand_Alone.mp3; sourceTree = "<group>"; };
-		2E3270CA1A200C98009892D4 /* pianoman.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = pianoman.mp3; sourceTree = "<group>"; };
 		2E3270CC1A200E96009892D4 /* BachGavotteShort.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = BachGavotteShort.mp3; sourceTree = "<group>"; };
 		2E3270CE1A200F3F009892D4 /* short.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = short.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -146,12 +134,6 @@
 			children = (
 				2E3270CE1A200F3F009892D4 /* short.mp3 */,
 				2E3270CC1A200E96009892D4 /* BachGavotteShort.mp3 */,
-				2E3270CA1A200C98009892D4 /* pianoman.mp3 */,
-				2E3270B91A1EF0B5009892D4 /* Awake.mp3 */,
-				2E3270BA1A1EF0B5009892D4 /* Dragula.mp3 */,
-				2E3270BB1A1EF0B5009892D4 /* Greed.mp3 */,
-				2E3270BC1A1EF0B5009892D4 /* Headstrong.mp3 */,
-				2E3270BD1A1EF0B5009892D4 /* I_Stand_Alone.mp3 */,
 			);
 			name = Music;
 			sourceTree = "<group>";
@@ -236,16 +218,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2E3270BE1A1EF0B5009892D4 /* Awake.mp3 in Resources */,
-				2E3270CB1A200C98009892D4 /* pianoman.mp3 in Resources */,
 				2E32709C1A1EECEC009892D4 /* Main.storyboard in Resources */,
-				2E3270BF1A1EF0B5009892D4 /* Dragula.mp3 in Resources */,
 				2E3270A11A1EECEC009892D4 /* LaunchScreen.xib in Resources */,
-				2E3270C01A1EF0B5009892D4 /* Greed.mp3 in Resources */,
-				2E3270C11A1EF0B5009892D4 /* Headstrong.mp3 in Resources */,
 				2E32709E1A1EECEC009892D4 /* Images.xcassets in Resources */,
 				2E3270CD1A200E96009892D4 /* BachGavotteShort.mp3 in Resources */,
-				2E3270C21A1EF0B5009892D4 /* I_Stand_Alone.mp3 in Resources */,
 				2E3270CF1A200F3F009892D4 /* short.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -458,6 +434,7 @@
 				2E3270B21A1EECEC009892D4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2E3270B31A1EECEC009892D4 /* Build configuration list for PBXNativeTarget "AAudioPlayerTests" */ = {
 			isa = XCConfigurationList;
@@ -466,6 +443,7 @@
 				2E3270B51A1EECEC009892D4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
