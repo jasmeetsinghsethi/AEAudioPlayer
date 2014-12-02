@@ -22,6 +22,9 @@
     BOOL wasInterrupted;
     AVAudioFramePosition seekOldFramePosition;
     AVAudioFramePosition seekNewTimePosition;
+    
+    AVAudioUnitEQ* eq;
+    NSMutableArray* bandGains;
 }
 @end
 
@@ -32,10 +35,22 @@
     self = [super init];
     if(self)
     {
+        seekNewTimePosition = -1;
         _url = url;
         [self startBufferingURL:url AtOffset:0 error:outError];
     }
     return self;
+}
+
+- (void)setParamIndex:(int)index freq:(int)freq gain:(CGFloat)gain
+{
+    AVAudioUnitEQFilterParameters* filterParameters = eq.bands[index];
+    
+    filterParameters.filterType = AVAudioUnitEQFilterTypeBandPass;
+    filterParameters.frequency = 5000.0;
+    filterParameters.bandwidth = 2.0;
+    filterParameters.bypass = false;
+    filterParameters.gain = gain;
 }
 
 - (void)startBufferingURL:(NSURL*)url AtOffset:(AVAudioFramePosition)offset error:(NSError**)outError
@@ -44,13 +59,21 @@
     if(DEBUG) NSLog(@"Initializing");
     
     AVAudioEngine* engine = [self.class sharedEngine];
-    AVAudioMixerNode* mainMixer = [engine mainMixerNode];
+    
+    eq = [[AVAudioUnitEQ alloc] initWithNumberOfBands:1];
     
     _player = [[AVAudioPlayerNode alloc] init];
-    [engine attachNode:_player];
-    [engine connect:_player to:mainMixer format:_file.processingFormat];
-    
     _file = [[AVAudioFile alloc] initForReading:url error:outError];
+    
+    [engine attachNode:eq];
+    [engine attachNode:_player];
+    
+    [self setParamIndex:0 freq:4000 gain:-96.0];
+    eq.globalGain = 1.0;
+    
+    [engine connect:_player to:eq format:_file.processingFormat];
+    [engine connect:eq to:[engine mainMixerNode] format:_file.processingFormat];
+    
     _file.framePosition = offset;
     
     if(*outError != nil)
@@ -61,13 +84,6 @@
     
     if(!bufferArray)
         bufferArray = [NSMutableArray new];
-    
-    AVAudioPCMBuffer* newBuffer = [self createAndLoadBuffer];
-    if(newBuffer != nil)
-    {
-        [bufferArray addObject:newBuffer];
-        [self scheduleBuffer:newBuffer];
-    }
     
     [engine startAndReturnError:outError];
     if(*outError != nil)
@@ -143,7 +159,7 @@
     
     [self startBufferLoop];
     
-    if(seekNewTimePosition != 0)
+    if(seekNewTimePosition != -1)
     {
         AVAudioTime* newTime = [[AVAudioTime alloc] initWithSampleTime:seekNewTimePosition atRate:_file.fileFormat.sampleRate];
         [_player playAtTime:newTime];
@@ -152,7 +168,7 @@
     {
         [_player play];
     }
-    seekNewTimePosition = 0;
+    seekNewTimePosition = -1;
 }
 
 - (void)pause
