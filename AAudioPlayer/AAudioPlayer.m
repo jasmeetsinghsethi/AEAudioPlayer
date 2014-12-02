@@ -24,13 +24,23 @@
     AVAudioFramePosition seekNewTimePosition;
     
     AVAudioUnitEQ* eq;
-    NSMutableArray* bandGains;
+    NSArray* frequencies;
+    NSMutableArray* frequencyGains;
+    
+    BOOL hasInitialized;
+    BOOL isPaused;
 }
 @end
 
 @implementation AAudioPlayer
 
-- (instancetype)initPCMBufferWithContentsOfURL:(NSURL *)url error:(NSError **)outError
+- (instancetype)initWithContentsOfURL:(NSURL *)url error:(NSError **)outError
+{
+    NSLog(@"Beginning new player initialization");
+    return [self initWithContentsOfURL:url error:outError frequencies:@[]];
+}
+
+- (instancetype)initWithContentsOfURL:(NSURL *)url error:(NSError **)outError frequencies:(NSArray *)freqs
 {
     self = [super init];
     if(self)
@@ -38,51 +48,75 @@
         seekNewTimePosition = -1;
         seekOldFramePosition = -1;
         _url = url;
-        [self startBufferingURL:url AtOffset:0 error:outError];
+        
+        frequencies = freqs;
+        frequencyGains = [[NSMutableArray alloc] init];
+        for(int i=0; i<frequencies.count; i++)
+        {
+            [frequencyGains addObject:@(0)];
+        }
+        
+        [self startBufferingURL:self.url AtOffset:0 error:nil];
     }
     return self;
 }
 
-- (void)setParamIndex:(int)index freq:(int)freq gain:(CGFloat)gain
+- (void)setParamIndex:(int)index
 {
     AVAudioUnitEQFilterParameters* filterParameters = eq.bands[index];
     
+    NSNumber* currentFreq = frequencies[index];
+    NSNumber* currentFreqGain = frequencyGains[index];
+    
     filterParameters.filterType = AVAudioUnitEQFilterTypeParametric;
-    filterParameters.frequency = freq;
+    filterParameters.frequency = currentFreq.intValue;
     filterParameters.bandwidth = 2.0;
     filterParameters.bypass = false;
-    filterParameters.gain = gain;
+    filterParameters.gain = currentFreqGain.floatValue;
 }
 
-- (void)setEqGain:(CGFloat)gain forFrequency:(CGFloat)frequency
+- (void)setEqGain:(CGFloat)gain forBand:(int)bandIndex
 {
-    [self setParamIndex:0 freq:(int)frequency gain:-96.0];
+    frequencyGains[bandIndex] = @(gain);
+    [self setParamIndex:bandIndex];
 }
 
 - (void)startBufferingURL:(NSURL*)url AtOffset:(AVAudioFramePosition)offset error:(NSError**)outError
 {
+    hasInitialized = true;
     
     if(DEBUG) NSLog(@"Initializing");
     
     AVAudioEngine* engine = [self.class sharedEngine];
     
-    eq = [[AVAudioUnitEQ alloc] initWithNumberOfBands:1];
-    
     _player = [[AVAudioPlayerNode alloc] init];
     _file = [[AVAudioFile alloc] initForReading:url error:outError];
     
-    [engine attachNode:eq];
     [engine attachNode:_player];
     
-    [self setParamIndex:0 freq:4000 gain:-96.0];
-    eq.globalGain = 1.0;
-    
-    [engine connect:_player to:eq format:_file.processingFormat];
-    [engine connect:eq to:[engine mainMixerNode] format:_file.processingFormat];
+    if(frequencies.count == 0)
+    {
+        [engine connect:_player to:[engine mainMixerNode] format:_file.processingFormat];
+    }
+    else
+    {
+        eq = [[AVAudioUnitEQ alloc] initWithNumberOfBands:frequencies.count];
+        [engine attachNode:eq];
+        
+        for( int i=0; i < frequencies.count; i++)
+        {
+            [self setParamIndex:i];
+        }
+        
+        eq.globalGain = 1.0;
+        
+        [engine connect:_player to:eq format:_file.processingFormat];
+        [engine connect:eq to:[engine mainMixerNode] format:_file.processingFormat];
+    }
     
     _file.framePosition = offset;
     
-    if(*outError != nil)
+    if(outError != nil && *outError != nil)
     {
         NSLog(@"ERROR READING FILE: %@",*outError);
         return;
@@ -92,7 +126,7 @@
         bufferArray = [NSMutableArray new];
     
     [engine startAndReturnError:outError];
-    if(*outError != nil)
+    if(outError != nil && *outError != nil)
     {
         NSLog(@"START ERROR: %@",*outError);
         return;
@@ -159,10 +193,12 @@
 
 - (void)play
 {
-    if(DEBUG) NSLog(@"Play %d %d %d",seekNewTimePosition, seekOldFramePosition, self.currentTime);
+    if([self playing])
+        return;
     
-    [self stopBufferLoop];
+    if(DEBUG) NSLog(@"Play %lld %lld %f",seekNewTimePosition, seekOldFramePosition, self.currentTime);
     
+    //[self stopBufferLoop];
     [self startBufferLoop];
     
     if(seekNewTimePosition != -1)
@@ -179,14 +215,18 @@
     {
         [_player play];
     }
+    
+        wasInterrupted = false;
+    
     seekNewTimePosition = -1;
 }
 
 - (void)pause
 {
+    wasInterrupted = true;
     [self stopBufferLoop];
-    
-    [_player pause];
+    [_player stop];
+    [bufferArray removeAllObjects];
 }
 
 - (void)stop
@@ -217,6 +257,14 @@
 {
     if(DEBUG) NSLog(@"Dealloc");
     _delegate = nil;
+    
+    if(_player)
+    {
+        [_player stop];
+        _player = nil;
+        
+    }
+    
     [self stop];
 }
 
@@ -241,7 +289,7 @@
     
     double sampleRate = _file.fileFormat.sampleRate;
     AVAudioFramePosition framePosition = (long long)(currentTime * sampleRate);
-    NSLog(@"FRAME: %lld %lld", _file.framePosition, framePosition);
+    if(DEBUG) NSLog(@"FRAME: %lld %lld", _file.framePosition, framePosition);
     
     [self stop];
     

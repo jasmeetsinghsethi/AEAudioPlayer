@@ -17,16 +17,14 @@
 
 @interface AAudioPlayer : NSObject
 
-
-//- (instancetype)initWithContentsOfURL:(NSURL *)url error:(NSError **)outError;
-- (instancetype)initPCMBufferWithContentsOfURL:(NSURL *)url error:(NSError **)outError;
+- (instancetype)initWithContentsOfURL:(NSURL *)url error:(NSError **)outError;
+- (instancetype)initWithContentsOfURL:(NSURL *)url error:(NSError **)outError frequencies:(NSArray*)frequencies;
 
 - (void)play;
 - (void)pause;
 - (void)stop;
 
-//+ (int)getBandFrequencyWithBandIndex:(int)bandIndex;
-- (void)setEqGain:(CGFloat)gain forFrequency:(CGFloat)frequency;
+- (void)setEqGain:(CGFloat)gain forBand:(int)bandIndex;
 
 @property (nonatomic) NSTimeInterval duration;
 @property (nonatomic) NSTimeInterval currentTime;
