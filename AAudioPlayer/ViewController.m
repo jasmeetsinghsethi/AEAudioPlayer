@@ -46,16 +46,6 @@
     
     index = 0;
     
-    /*frequencyLabel1.text = [NSString stringWithFormat:@"%d",[AAudioPlayer getBandFrequencyWithBandIndex:0]];
-    frequencyLabel2.text = [NSString stringWithFormat:@"%d",[AAudioPlayer getBandFrequencyWithBandIndex:1]];
-    frequencyLabel3.text = [NSString stringWithFormat:@"%d",[AAudioPlayer getBandFrequencyWithBandIndex:2]];
-    frequencyLabel4.text = [NSString stringWithFormat:@"%d",[AAudioPlayer getBandFrequencyWithBandIndex:3]];
-    frequencyLabel5.text = [NSString stringWithFormat:@"%d",[AAudioPlayer getBandFrequencyWithBandIndex:4]];
-    frequencyLabel6.text = [NSString stringWithFormat:@"%d",[AAudioPlayer getBandFrequencyWithBandIndex:5]];
-    frequencyLabel7.text = [NSString stringWithFormat:@"%d",[AAudioPlayer getBandFrequencyWithBandIndex:6]];
-    frequencyLabel8.text = [NSString stringWithFormat:@"%d",[AAudioPlayer getBandFrequencyWithBandIndex:7]];
-    frequencyLabel9.text = [NSString stringWithFormat:@"%d",[AAudioPlayer getBandFrequencyWithBandIndex:8]];
-    frequencyLabel10.text = [NSString stringWithFormat:@"%d",[AAudioPlayer getBandFrequencyWithBandIndex:9]];*/
 }
 
 - (IBAction)setFrequency:(UISlider*)sender {
@@ -66,7 +56,7 @@
     int rangeTotal = 96 + 24;
     int theSpot = 24 - rangeTotal*value;
     
-    
+    [player setEqGain:-96 forFrequency:10000*sender.value];
 }
 
 - (void)didReceiveMemoryWarning {

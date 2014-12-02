@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vXZ-lx-hvc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -110,87 +111,6 @@
                                     <action selector="setFrequency:" destination="vXZ-lx-hvc" eventType="valueChanged" id="5oC-dc-mde"/>
                                 </connections>
                             </slider>
-                            <slider opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="0CN-QM-zEb">
-                                <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="77" y="86" width="277" height="31"/>
-                                </variation>
-                                <connections>
-                                    <action selector="setFrequency:" destination="vXZ-lx-hvc" eventType="valueChanged" id="jis-Aa-xNs"/>
-                                </connections>
-                            </slider>
-                            <slider opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="0U6-M9-p3m">
-                                <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="77" y="124" width="277" height="31"/>
-                                </variation>
-                                <connections>
-                                    <action selector="setFrequency:" destination="vXZ-lx-hvc" eventType="valueChanged" id="sce-wV-Iy2"/>
-                                </connections>
-                            </slider>
-                            <slider opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="cy4-nJ-o7b">
-                                <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="77" y="162" width="277" height="31"/>
-                                </variation>
-                                <connections>
-                                    <action selector="setFrequency:" destination="vXZ-lx-hvc" eventType="valueChanged" id="OKL-i5-CxR"/>
-                                </connections>
-                            </slider>
-                            <slider opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="ftv-8a-PIF">
-                                <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="77" y="200" width="277" height="31"/>
-                                </variation>
-                                <connections>
-                                    <action selector="setFrequency:" destination="vXZ-lx-hvc" eventType="valueChanged" id="9pw-og-Khb"/>
-                                </connections>
-                            </slider>
-                            <slider opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Hib-uR-Sbf">
-                                <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="77" y="238" width="277" height="31"/>
-                                </variation>
-                                <connections>
-                                    <action selector="setFrequency:" destination="vXZ-lx-hvc" eventType="valueChanged" id="bcH-jO-DjX"/>
-                                </connections>
-                            </slider>
-                            <slider opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="gkz-AD-iu8">
-                                <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="77" y="276" width="277" height="31"/>
-                                </variation>
-                                <connections>
-                                    <action selector="setFrequency:" destination="vXZ-lx-hvc" eventType="valueChanged" id="gj2-Q4-czS"/>
-                                </connections>
-                            </slider>
-                            <slider opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="yLd-wZ-Wb1">
-                                <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="77" y="314" width="277" height="31"/>
-                                </variation>
-                                <connections>
-                                    <action selector="setFrequency:" destination="vXZ-lx-hvc" eventType="valueChanged" id="VgP-Kq-GRg"/>
-                                </connections>
-                            </slider>
-                            <slider opaque="NO" tag="9" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="0po-00-Y9y">
-                                <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="77" y="352" width="277" height="31"/>
-                                </variation>
-                                <connections>
-                                    <action selector="setFrequency:" destination="vXZ-lx-hvc" eventType="valueChanged" id="kJW-fi-NR1"/>
-                                </connections>
-                            </slider>
-                            <slider opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="hMF-JZ-w6d">
-                                <rect key="frame" x="0.0" y="-15" width="118" height="31"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="77" y="390" width="277" height="31"/>
-                                </variation>
-                                <connections>
-                                    <action selector="setFrequency:" destination="vXZ-lx-hvc" eventType="valueChanged" id="KPE-7t-yqS"/>
-                                </connections>
-                            </slider>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U6Y-rB-vni">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
@@ -198,87 +118,6 @@
                                 <nil key="highlightedColor"/>
                                 <variation key="widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="29" y="51" width="42" height="21"/>
-                                </variation>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Hv-Iy-gqE">
-                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="29" y="90" width="42" height="21"/>
-                                </variation>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VUS-Cj-vHM">
-                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="29" y="128" width="42" height="21"/>
-                                </variation>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c0s-Cr-feV">
-                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="29" y="166" width="42" height="21"/>
-                                </variation>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3BB-Nh-OW6">
-                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="29" y="204" width="42" height="21"/>
-                                </variation>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lcl-jy-ygt">
-                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="29" y="242" width="42" height="21"/>
-                                </variation>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P8D-7K-fSl">
-                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="29" y="280" width="42" height="21"/>
-                                </variation>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="doq-wN-9tQ">
-                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="29" y="318" width="42" height="21"/>
-                                </variation>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="odS-xN-XoJ">
-                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="29" y="356" width="42" height="21"/>
-                                </variation>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GTd-l7-007">
-                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="29" y="394" width="42" height="21"/>
                                 </variation>
                             </label>
                         </subviews>
@@ -307,25 +146,7 @@
                                 <exclude reference="AP8-0t-46o"/>
                                 <exclude reference="gSy-tX-nEf"/>
                                 <exclude reference="mCM-Wi-7tU"/>
-                                <exclude reference="0CN-QM-zEb"/>
-                                <exclude reference="0U6-M9-p3m"/>
-                                <exclude reference="cy4-nJ-o7b"/>
-                                <exclude reference="ftv-8a-PIF"/>
-                                <exclude reference="Hib-uR-Sbf"/>
-                                <exclude reference="gkz-AD-iu8"/>
-                                <exclude reference="yLd-wZ-Wb1"/>
-                                <exclude reference="0po-00-Y9y"/>
-                                <exclude reference="hMF-JZ-w6d"/>
                                 <exclude reference="U6Y-rB-vni"/>
-                                <exclude reference="0Hv-Iy-gqE"/>
-                                <exclude reference="VUS-Cj-vHM"/>
-                                <exclude reference="c0s-Cr-feV"/>
-                                <exclude reference="3BB-Nh-OW6"/>
-                                <exclude reference="Lcl-jy-ygt"/>
-                                <exclude reference="P8D-7K-fSl"/>
-                                <exclude reference="doq-wN-9tQ"/>
-                                <exclude reference="odS-xN-XoJ"/>
-                                <exclude reference="GTd-l7-007"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="WTW-rR-T0l"/>
@@ -333,12 +154,12 @@
                                 <exclude reference="xly-lo-Y8d"/>
                                 <exclude reference="Bwp-oh-sNM"/>
                                 <exclude reference="i2D-Lc-DsP"/>
-                                <exclude reference="BV4-Bi-xS8"/>
-                                <exclude reference="ede-Ej-W0R"/>
                                 <exclude reference="XJN-Uw-23g"/>
                                 <exclude reference="dZI-24-dDd"/>
                                 <exclude reference="sZk-eP-1gF"/>
                                 <exclude reference="vGd-ZQ-zhD"/>
+                                <exclude reference="BV4-Bi-xS8"/>
+                                <exclude reference="ede-Ej-W0R"/>
                                 <exclude reference="aW0-Gf-MDb"/>
                             </mask>
                         </variation>
@@ -348,25 +169,7 @@
                                 <include reference="AP8-0t-46o"/>
                                 <include reference="gSy-tX-nEf"/>
                                 <include reference="mCM-Wi-7tU"/>
-                                <include reference="0CN-QM-zEb"/>
-                                <include reference="0U6-M9-p3m"/>
-                                <include reference="cy4-nJ-o7b"/>
-                                <include reference="ftv-8a-PIF"/>
-                                <include reference="Hib-uR-Sbf"/>
-                                <include reference="gkz-AD-iu8"/>
-                                <include reference="yLd-wZ-Wb1"/>
-                                <include reference="0po-00-Y9y"/>
-                                <include reference="hMF-JZ-w6d"/>
                                 <include reference="U6Y-rB-vni"/>
-                                <include reference="0Hv-Iy-gqE"/>
-                                <include reference="VUS-Cj-vHM"/>
-                                <include reference="c0s-Cr-feV"/>
-                                <include reference="3BB-Nh-OW6"/>
-                                <include reference="Lcl-jy-ygt"/>
-                                <include reference="P8D-7K-fSl"/>
-                                <include reference="doq-wN-9tQ"/>
-                                <include reference="odS-xN-XoJ"/>
-                                <include reference="GTd-l7-007"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="WTW-rR-T0l"/>
@@ -374,27 +177,18 @@
                                 <include reference="xly-lo-Y8d"/>
                                 <include reference="Bwp-oh-sNM"/>
                                 <include reference="i2D-Lc-DsP"/>
-                                <include reference="BV4-Bi-xS8"/>
-                                <include reference="ede-Ej-W0R"/>
                                 <include reference="XJN-Uw-23g"/>
                                 <include reference="dZI-24-dDd"/>
                                 <include reference="sZk-eP-1gF"/>
                                 <include reference="vGd-ZQ-zhD"/>
+                                <include reference="BV4-Bi-xS8"/>
+                                <include reference="ede-Ej-W0R"/>
                                 <include reference="aW0-Gf-MDb"/>
                             </mask>
                         </variation>
                     </view>
                     <connections>
                         <outlet property="frequencyLabel1" destination="U6Y-rB-vni" id="Y0I-Z4-Wdt"/>
-                        <outlet property="frequencyLabel10" destination="GTd-l7-007" id="I6z-PI-jX8"/>
-                        <outlet property="frequencyLabel2" destination="0Hv-Iy-gqE" id="WVe-49-y0N"/>
-                        <outlet property="frequencyLabel3" destination="VUS-Cj-vHM" id="Jjl-le-WpA"/>
-                        <outlet property="frequencyLabel4" destination="c0s-Cr-feV" id="2tn-QM-i7e"/>
-                        <outlet property="frequencyLabel5" destination="3BB-Nh-OW6" id="50W-EE-cuC"/>
-                        <outlet property="frequencyLabel6" destination="Lcl-jy-ygt" id="p7Z-pD-Qwf"/>
-                        <outlet property="frequencyLabel7" destination="P8D-7K-fSl" id="TcF-uq-qcl"/>
-                        <outlet property="frequencyLabel8" destination="doq-wN-9tQ" id="RTo-34-aVe"/>
-                        <outlet property="frequencyLabel9" destination="odS-xN-XoJ" id="DZy-wI-6cU"/>
                         <outlet property="progressBar" destination="gSy-tX-nEf" id="tYt-o2-QjS"/>
                     </connections>
                 </viewController>

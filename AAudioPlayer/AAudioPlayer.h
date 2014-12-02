@@ -26,8 +26,7 @@
 - (void)stop;
 
 //+ (int)getBandFrequencyWithBandIndex:(int)bandIndex;
-//- (void)setEqGain:(CGFloat)gain forFrequency:(eqValue)frequency;
-
+- (void)setEqGain:(CGFloat)gain forFrequency:(CGFloat)frequency;
 
 @property (nonatomic) NSTimeInterval duration;
 @property (nonatomic) NSTimeInterval currentTime;

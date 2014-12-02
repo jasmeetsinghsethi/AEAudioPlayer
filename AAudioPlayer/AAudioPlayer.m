@@ -47,11 +47,16 @@
 {
     AVAudioUnitEQFilterParameters* filterParameters = eq.bands[index];
     
-    filterParameters.filterType = AVAudioUnitEQFilterTypeBandPass;
-    filterParameters.frequency = 5000.0;
+    filterParameters.filterType = AVAudioUnitEQFilterTypeParametric;
+    filterParameters.frequency = freq;
     filterParameters.bandwidth = 2.0;
     filterParameters.bypass = false;
     filterParameters.gain = gain;
+}
+
+- (void)setEqGain:(CGFloat)gain forFrequency:(CGFloat)frequency
+{
+    [self setParamIndex:0 freq:(int)frequency gain:-96.0];
 }
 
 - (void)startBufferingURL:(NSURL*)url AtOffset:(AVAudioFramePosition)offset error:(NSError**)outError
