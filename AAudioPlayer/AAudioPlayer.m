@@ -16,11 +16,11 @@
     NSMutableArray* bufferArray;
     AVAudioPCMBuffer* skipBufferCompletion;
     
-    NSTimer* runnTimer;
+    NSTimer* runTimer;
     NSThread* runThread;
     
     BOOL wasInterrupted;
-    AVAudioFramePosition seekOldFramePosition;
+    //AVAudioFramePosition seekOldFramePosition;
     AVAudioFramePosition seekNewTimePosition;
     
     AVAudioUnitEQ* eq;
@@ -46,7 +46,7 @@
     if(self)
     {
         seekNewTimePosition = -1;
-        seekOldFramePosition = -1;
+        //seekOldFramePosition = -1;
         _url = url;
         
         frequencies = freqs;
@@ -56,7 +56,7 @@
             [frequencyGains addObject:@(0)];
         }
         
-        [self startBufferingURL:self.url AtOffset:0 error:nil];
+        hasInitialized = false;
     }
     return self;
 }
@@ -70,7 +70,7 @@
     
     filterParameters.filterType = AVAudioUnitEQFilterTypeParametric;
     filterParameters.frequency = currentFreq.intValue;
-    filterParameters.bandwidth = 2.0;
+    filterParameters.bandwidth = 1.0;
     filterParameters.bypass = false;
     filterParameters.gain = currentFreqGain.floatValue;
 }
@@ -83,7 +83,7 @@
 
 - (void)startBufferingURL:(NSURL*)url AtOffset:(AVAudioFramePosition)offset error:(NSError**)outError
 {
-    hasInitialized = true;
+    [self stop];
     
     if(DEBUG) NSLog(@"Initializing");
     
@@ -122,31 +122,38 @@
         return;
     }
     
-    if(!bufferArray)
-        bufferArray = [NSMutableArray new];
+    bufferArray = [NSMutableArray new];
     
-    [engine startAndReturnError:outError];
-    if(outError != nil && *outError != nil)
+    if(!engine.isRunning)
     {
-        NSLog(@"START ERROR: %@",*outError);
-        return;
+        [engine startAndReturnError:outError];
+        if(outError != nil && *outError != nil)
+        {
+            NSLog(@"START ERROR: %@",*outError);
+            return;
+        }
     }
     
-    seekNewTimePosition = seekOldFramePosition - offset;
+    seekNewTimePosition = offset;
     
-    wasInterrupted = false;
-    seekOldFramePosition = 0;
+    NSLog(@"(%s) N:%lld / Offset:%lld",__PRETTY_FUNCTION__,seekNewTimePosition,offset);
+    
+    //wasInterrupted = false;
 }
 
 -(void)loadBuffer
 {
-    if(bufferArray.count < 2)
+    while(bufferArray.count < 2)
     {
         AVAudioPCMBuffer* newBuffer = [self createAndLoadBuffer];
         if(newBuffer != nil)
         {
             [bufferArray addObject:newBuffer];
             [self scheduleBuffer:newBuffer];
+        }
+        else
+        {
+            break;
         }
     }
 }
@@ -155,7 +162,9 @@
 {
     [_player scheduleBuffer:buffer atTime:nil options:AVAudioPlayerNodeBufferInterruptsAtLoop completionHandler:^{
         
-        if(bufferArray && bufferArray.count > 0) [bufferArray removeObjectAtIndex:0];
+        if(bufferArray != nil && bufferArray.count > 0) [bufferArray removeObjectAtIndex:0];
+        
+        [self loadBuffer];
 
         if(bufferArray.count == 0 && !wasInterrupted)
         {
@@ -170,6 +179,11 @@
 
 - (AVAudioPCMBuffer*)createAndLoadBuffer
 {
+    if(_file == nil || _player == nil || ![[self.class sharedEngine] isRunning])
+    {
+        return nil;
+    }
+    
     AVAudioFormat *format = _file.processingFormat;
     UInt32 frameCount = (64 * 1024);
     AVAudioPCMBuffer* buffer = [[AVAudioPCMBuffer alloc] initWithPCMFormat:format frameCapacity:frameCount];
@@ -196,10 +210,23 @@
     if([self playing])
         return;
     
-    if(DEBUG) NSLog(@"Play %lld %lld %f",seekNewTimePosition, seekOldFramePosition, self.currentTime);
+    if(!hasInitialized)
+    {
+        [self startBufferingURL:self.url AtOffset:0 error:nil];
+        hasInitialized = true;
+    }
     
-    //[self stopBufferLoop];
-    [self startBufferLoop];
+    wasInterrupted = false;
+    
+    if(![[self.class sharedEngine] isRunning])
+    {
+        NSLog(@"The Player Wasnt Running");
+        [self setCurrentTime:[self currentTime]];
+    }
+    
+    if(DEBUG) NSLog(@"Play %lld %f %lld",seekNewTimePosition, _file.processingFormat.sampleRate, _player.lastRenderTime.sampleTime);
+    
+    [self startBuffer];
     
     if(seekNewTimePosition != -1)
     {
@@ -208,7 +235,9 @@
             seekNewTimePosition = self.currentTime;
         }
         
-        AVAudioTime* newTime = [[AVAudioTime alloc] initWithSampleTime:seekNewTimePosition atRate:_file.fileFormat.sampleRate];
+        AVAudioFramePosition curPos = _player.lastRenderTime.sampleTime;
+        
+        AVAudioTime* newTime = [[AVAudioTime alloc] initWithSampleTime:curPos-seekNewTimePosition atRate:_file.processingFormat.sampleRate];
         [_player playAtTime:newTime];
     }
     else
@@ -216,15 +245,14 @@
         [_player play];
     }
     
-        wasInterrupted = false;
-    
     seekNewTimePosition = -1;
+   // seekOldFramePosition = -1;
 }
 
 - (void)pause
 {
     wasInterrupted = true;
-    [self stopBufferLoop];
+    //[self stopBufferLoop];
     [_player stop];
     [bufferArray removeAllObjects];
 }
@@ -234,15 +262,15 @@
     if(DEBUG) NSLog(@"Stopping");
     wasInterrupted = true;
     
-    [self stopBufferLoop];
+    //[self stopBufferLoop];
 
     if(_player)
     {
         [_player stop];
-        [[self.class sharedEngine] stop];
     }
     
-    [bufferArray removeAllObjects];
+    if(bufferArray != nil)
+        [bufferArray removeAllObjects];
     
     _player = nil;
     _file = nil;
@@ -262,19 +290,23 @@
     {
         [_player stop];
         _player = nil;
-        
     }
     
-    [self stop];
+    //[self stopBufferLoop];
 }
 
 - (NSTimeInterval)currentTime
 {
     double sampleRate = _file.fileFormat.sampleRate;
     if(sampleRate == 0)
+    {
+        //NSLog(@"(%s) Sample Rate == 0",__PRETTY_FUNCTION__);
         return 0;
+    }
     
     double currentTime = ceil((double)[_player playerTimeForNodeTime:_player.lastRenderTime].sampleTime / sampleRate);
+    
+    //NSLog(@"Current Time: %f",currentTime);
     
     return currentTime;
 }
@@ -285,16 +317,16 @@
     
     BOOL isPlaying = [_player isPlaying];
     
-    seekOldFramePosition = [_player playerTimeForNodeTime:_player.lastRenderTime].sampleTime;
+    //seekOldFramePosition = [_player playerTimeForNodeTime:_player.lastRenderTime].sampleTime;
     
     double sampleRate = _file.fileFormat.sampleRate;
     AVAudioFramePosition framePosition = (long long)(currentTime * sampleRate);
     if(DEBUG) NSLog(@"FRAME: %lld %lld", _file.framePosition, framePosition);
     
-    [self stop];
-    
     NSError* startError = nil;
+    
     [self startBufferingURL:_url AtOffset:framePosition error:&startError];
+    
     if(startError)
         NSLog(@"Start Error: %@",startError);
     
@@ -312,40 +344,11 @@
 
 #pragma mark Buffer Loop
 
-- (void)startBufferLoop
+- (void)startBuffer
 {
-    if(runThread)
-    {
-        [runThread cancel];
-        runThread = nil;
-    }
-    runThread = [[NSThread alloc] initWithTarget:self selector:@selector(processBufferLoop) object:nil];
-    [runThread start];
+    [self loadBuffer];
 }
 
-- (void)processBufferLoop
-{
-    while(true)
-    {
-        if(runThread != nil && !runThread.cancelled)
-        {
-            [self loadBuffer];
-        }
-        else
-        {
-            break;
-        }
-    }
-}
-
-- (void)stopBufferLoop
-{
-    if(runThread)
-    {
-        [runThread cancel];
-        runThread = nil;
-    }
-}
 
 #pragma mark GLOBAL ENGINE
 

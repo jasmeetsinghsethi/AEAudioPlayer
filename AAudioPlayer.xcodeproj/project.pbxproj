@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2E24FAD11A313A99001FB418 /* AAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E24FAD01A313A99001FB418 /* AAudioPlayer.m */; };
 		2E3270931A1EECEC009892D4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3270921A1EECEC009892D4 /* main.m */; };
 		2E3270961A1EECEC009892D4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3270951A1EECEC009892D4 /* AppDelegate.m */; };
 		2E3270991A1EECEC009892D4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3270981A1EECEC009892D4 /* ViewController.m */; };
@@ -15,7 +16,6 @@
 		2E3270A11A1EECEC009892D4 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E32709F1A1EECEC009892D4 /* LaunchScreen.xib */; };
 		2E3270AD1A1EECEC009892D4 /* AAudioPlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E3270AC1A1EECEC009892D4 /* AAudioPlayerTests.m */; };
 		2E3270CF1A200F3F009892D4 /* short.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2E3270CE1A200F3F009892D4 /* short.mp3 */; };
-		2E8F72A71A2E7474003D429D /* AAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E8F72A61A2E7474003D429D /* AAudioPlayer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +29,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2E24FACB1A312CEC001FB418 /* AAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAudioPlayer.h; sourceTree = "<group>"; };
+		2E24FAD01A313A99001FB418 /* AAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAudioPlayer.m; sourceTree = "<group>"; };
 		2E32708D1A1EECEC009892D4 /* AAudioPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AAudioPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E3270911A1EECEC009892D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2E3270921A1EECEC009892D4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -43,8 +45,6 @@
 		2E3270AB1A1EECEC009892D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2E3270AC1A1EECEC009892D4 /* AAudioPlayerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AAudioPlayerTests.m; sourceTree = "<group>"; };
 		2E3270CE1A200F3F009892D4 /* short.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = short.mp3; sourceTree = "<group>"; };
-		2E8F72A51A2E7474003D429D /* AAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAudioPlayer.h; sourceTree = "<group>"; };
-		2E8F72A61A2E7474003D429D /* AAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAudioPlayer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,8 +90,8 @@
 				2E3270951A1EECEC009892D4 /* AppDelegate.m */,
 				2E3270971A1EECEC009892D4 /* ViewController.h */,
 				2E3270981A1EECEC009892D4 /* ViewController.m */,
-				2E8F72A51A2E7474003D429D /* AAudioPlayer.h */,
-				2E8F72A61A2E7474003D429D /* AAudioPlayer.m */,
+				2E24FACB1A312CEC001FB418 /* AAudioPlayer.h */,
+				2E24FAD01A313A99001FB418 /* AAudioPlayer.m */,
 				2E32709A1A1EECEC009892D4 /* Main.storyboard */,
 				2E32709D1A1EECEC009892D4 /* Images.xcassets */,
 				2E32709F1A1EECEC009892D4 /* LaunchScreen.xib */,
@@ -237,7 +237,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E3270991A1EECEC009892D4 /* ViewController.m in Sources */,
-				2E8F72A71A2E7474003D429D /* AAudioPlayer.m in Sources */,
+				2E24FAD11A313A99001FB418 /* AAudioPlayer.m in Sources */,
 				2E3270961A1EECEC009892D4 /* AppDelegate.m in Sources */,
 				2E3270931A1EECEC009892D4 /* main.m in Sources */,
 			);

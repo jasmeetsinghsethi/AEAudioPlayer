@@ -136,7 +136,6 @@
         }
         else
         {
-            
             [player play];
             
             [self setFreq:self.frequency1];
