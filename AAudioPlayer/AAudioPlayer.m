@@ -11,6 +11,8 @@
 
 #define DEBUG 1
 
+#define kNumBufferNodes 3
+
 @interface AAudioPlayer ()
 {
     NSMutableArray* bufferArray;
@@ -28,7 +30,9 @@
     NSMutableArray* frequencyGains;
     
     BOOL hasInitialized;
+    
     BOOL isPaused;
+    NSTimeInterval pausedTime;
 }
 @end
 
@@ -143,7 +147,7 @@
 
 -(void)loadBuffer
 {
-    while(bufferArray.count < 2)
+    while(bufferArray.count < kNumBufferNodes)
     {
         AVAudioPCMBuffer* newBuffer = [self createAndLoadBuffer];
         if(newBuffer != nil)
@@ -163,7 +167,10 @@
     [_player scheduleBuffer:buffer atTime:nil options:AVAudioPlayerNodeBufferInterruptsAtLoop completionHandler:^{
         
         if(bufferArray != nil && bufferArray.count > 0) [bufferArray removeObjectAtIndex:0];
-        
+        else
+        {
+            return;
+        }
         [self loadBuffer];
 
         if(bufferArray.count == 0 && !wasInterrupted)
@@ -224,6 +231,9 @@
         [self setCurrentTime:[self currentTime]];
     }
     
+    isPaused = false;
+    pausedTime = -1;
+    
     if(DEBUG) NSLog(@"Play %lld %f %lld",seekNewTimePosition, _file.processingFormat.sampleRate, _player.lastRenderTime.sampleTime);
     
     [self startBuffer];
@@ -246,15 +256,29 @@
     }
     
     seekNewTimePosition = -1;
+    wasInterrupted = false;
    // seekOldFramePosition = -1;
 }
 
 - (void)pause
 {
-    wasInterrupted = true;
-    //[self stopBufferLoop];
-    [_player stop];
-    [bufferArray removeAllObjects];
+    pausedTime = self.currentTime;
+    
+    if(DEBUG) NSLog(@"Seeking");
+    
+    double sampleRate = _file.fileFormat.sampleRate;
+    AVAudioFramePosition framePosition = (long long)(self.currentTime * sampleRate);
+    if(DEBUG) NSLog(@"FRAME: %lld %lld", _file.framePosition, framePosition);
+    
+    NSError* startError = nil;
+    
+    [self startBufferingURL:_url AtOffset:framePosition error:&startError];
+    
+    if(startError)
+        NSLog(@"Start Error: %@",startError);
+    
+    isPaused = true;
+    
 }
 
 - (void)stop
@@ -304,9 +328,12 @@
         return 0;
     }
     
-    double currentTime = ceil((double)[_player playerTimeForNodeTime:_player.lastRenderTime].sampleTime / sampleRate);
+    NSTimeInterval currentTime = ((NSTimeInterval)[_player playerTimeForNodeTime:_player.lastRenderTime].sampleTime / sampleRate);
     
     //NSLog(@"Current Time: %f",currentTime);
+    
+    if(isPaused)
+        return pausedTime;
     
     return currentTime;
 }
@@ -339,7 +366,7 @@
     double sampleRate = _file.fileFormat.sampleRate;
     if(sampleRate == 0)
         return 0;
-    return ceil(((double)_file.length/sampleRate));// sampleRate;
+    return (((NSTimeInterval)_file.length/sampleRate));// sampleRate;
 }
 
 #pragma mark Buffer Loop
