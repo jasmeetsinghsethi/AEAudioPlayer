@@ -11,7 +11,7 @@
 
 #define DEBUG 1
 
-#define kNumBufferNodes 3
+#define kNumBufferNodes 4
 
 @interface AAudioPlayer ()
 {
@@ -33,6 +33,9 @@
     
     BOOL isPaused;
     NSTimeInterval pausedTime;
+    
+    //used to prevent multiple interruption notifications
+    BOOL isAudioInterruption;
 }
 @end
 
@@ -61,9 +64,34 @@
         }
         
         hasInitialized = false;
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notification:) name:
+         AVAudioSessionInterruptionNotification object:nil];
     }
     return self;
 }
+
+- (void)notification:(NSNotification*)notificaiton
+{
+    if( [notificaiton.userInfo[AVAudioSessionInterruptionTypeKey] intValue] == AVAudioSessionInterruptionTypeBegan )
+    {
+        if(_delegate != nil && [_delegate respondsToSelector:@selector(audioPlayerBeginInterruption:)])
+        {
+            [_delegate audioPlayerBeginInterruption:self];
+        }
+    }
+    
+    if( [notificaiton.userInfo[AVAudioSessionInterruptionTypeKey] intValue] == AVAudioSessionInterruptionTypeEnded )
+    {
+        if(_delegate != nil && [_delegate respondsToSelector:@selector(audioPlayerEndInterruption:withOptions:)])
+        {
+            NSInteger options = [notificaiton.userInfo[AVAudioSessionInterruptionOptionKey] intValue];
+            [_delegate audioPlayerEndInterruption:self withOptions:options];
+        }
+    }
+}
+
+#pragma mark
 
 - (void)setParamIndex:(int)index
 {
@@ -118,7 +146,21 @@
         [engine connect:eq to:[engine mainMixerNode] format:_file.processingFormat];
     }
     
-    _file.framePosition = offset;
+    @try {
+        _file.framePosition = offset;
+    }
+    @catch (NSException *exception) {
+        _file.framePosition = offset;
+        NSLog(@"(%s) EXCEPTION: %@",__PRETTY_FUNCTION__,exception.description);
+        
+        if(DEBUG)
+        {
+            UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"EXCEPTION" message:[NSString stringWithFormat:@"(%s) EXCEPTION: %@",__PRETTY_FUNCTION__,exception.description] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            [alertView show];
+        }
+    }
+    @finally {
+    }
     
     if(outError != nil && *outError != nil)
     {
@@ -166,6 +208,7 @@
 {
     [_player scheduleBuffer:buffer atTime:nil options:AVAudioPlayerNodeBufferInterruptsAtLoop completionHandler:^{
         
+        
         if(bufferArray != nil && bufferArray.count > 0) [bufferArray removeObjectAtIndex:0];
         else
         {
@@ -191,19 +234,35 @@
         return nil;
     }
     
-    AVAudioFormat *format = _file.processingFormat;
-    UInt32 frameCount = (64 * 1024);
-    AVAudioPCMBuffer* buffer = [[AVAudioPCMBuffer alloc] initWithPCMFormat:format frameCapacity:frameCount];
-    NSError* error = nil;
-    if(![_file readIntoBuffer:buffer error:&error])
-    {
-        NSLog(@"failed to read audio file: %@",error);
-        return nil;
-    }
-    if(buffer.frameLength == 0)
-        return nil;
+    AVAudioPCMBuffer* buffer = nil;
     
-
+    @try
+    {
+        
+        AVAudioFormat *format = _file.processingFormat;
+        UInt32 frameCount = (64 * 1024);
+        buffer = [[AVAudioPCMBuffer alloc] initWithPCMFormat:format frameCapacity:frameCount];
+        NSError* error = nil;
+        if(![_file readIntoBuffer:buffer error:&error])
+        {
+            NSLog(@"failed to read audio file: %@",error);
+            return nil;
+        }
+        if(buffer.frameLength == 0)
+            return nil;
+        
+    }
+    @catch (NSException *exception) {
+        
+        NSLog(@"(%s) EXCEPTION: %@",__PRETTY_FUNCTION__,exception.description);
+        
+        if(DEBUG)
+        {
+            UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"EXCEPTION" message:[NSString stringWithFormat:@"(%s) EXCEPTION: %@",__PRETTY_FUNCTION__,exception.description] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            [alert show];
+        }
+    }
+    
     return buffer;
 }
 
@@ -214,6 +273,9 @@
 
 - (void)play
 {
+    isAudioInterruption = false;
+    isPaused = false;
+    
     if([self playing])
         return;
     
@@ -225,14 +287,24 @@
     
     wasInterrupted = false;
     
-    if(![[self.class sharedEngine] isRunning])
+    @try
     {
-        NSLog(@"The Player Wasnt Running");
-        [self setCurrentTime:[self currentTime]];
+        if(![[self.class sharedEngine] isRunning])
+        {
+            NSError* startError = nil;
+            [[self.class sharedEngine] startAndReturnError:&startError];
+            if(startError)
+            {
+                NSLog(@"Error Starting Player: %@",startError);
+            }
+        }
+        if(isPaused)
+        {
+            [_player play];
+        }
     }
-    
-    isPaused = false;
-    pausedTime = -1;
+    @catch (NSException *exception) {
+    }
     
     if(DEBUG) NSLog(@"Play %lld %f %lld",seekNewTimePosition, _file.processingFormat.sampleRate, _player.lastRenderTime.sampleTime);
     
@@ -244,9 +316,9 @@
         {
             seekNewTimePosition = self.currentTime;
         }
-        
+
         AVAudioFramePosition curPos = _player.lastRenderTime.sampleTime;
-        
+
         AVAudioTime* newTime = [[AVAudioTime alloc] initWithSampleTime:curPos-seekNewTimePosition atRate:_file.processingFormat.sampleRate];
         [_player playAtTime:newTime];
     }
@@ -257,11 +329,12 @@
     
     seekNewTimePosition = -1;
     wasInterrupted = false;
-   // seekOldFramePosition = -1;
 }
 
 - (void)pause
 {
+    isAudioInterruption = false;
+    /*
     pausedTime = self.currentTime;
     
     if(DEBUG) NSLog(@"Seeking");
@@ -276,15 +349,17 @@
     
     if(startError)
         NSLog(@"Start Error: %@",startError);
-    
+    */
+    pausedTime = self.currentTime;
+    [_player pause];
     isPaused = true;
-    
 }
 
 - (void)stop
 {
     if(DEBUG) NSLog(@"Stopping");
     wasInterrupted = true;
+    isAudioInterruption = false;
     
     //[self stopBufferLoop];
 
@@ -302,7 +377,9 @@
 
 - (BOOL)playing
 {
+    NSLog(@"is playing: %d",_player.isPlaying);
     return _player.playing;
+
 }
 
 - (void)dealloc
@@ -341,6 +418,8 @@
 - (void)setCurrentTime:(NSTimeInterval)currentTime
 {
     if(DEBUG) NSLog(@"Seeking");
+    
+    isPaused = false;
     
     BOOL isPlaying = [_player isPlaying];
     
