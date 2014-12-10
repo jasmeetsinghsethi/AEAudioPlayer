@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2EBC2F231A38FA3600B169CD /* short.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 2EBC2F221A38FA3600B169CD /* short.mp3 */; };
 		2EBCA7C81A38F02F00B44A09 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBCA7C71A38F02F00B44A09 /* main.m */; };
 		2EBCA7CB1A38F02F00B44A09 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBCA7CA1A38F02F00B44A09 /* AppDelegate.m */; };
 		2EBCA7D31A38F02F00B44A09 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2EBCA7D21A38F02F00B44A09 /* Images.xcassets */; };
@@ -28,6 +29,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2EBC2F221A38FA3600B169CD /* short.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = short.mp3; sourceTree = "<group>"; };
 		2EBCA7C21A38F02F00B44A09 /* AEAudioPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AEAudioPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EBCA7C61A38F02F00B44A09 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2EBCA7C71A38F02F00B44A09 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 				2EBCA7CA1A38F02F00B44A09 /* AppDelegate.m */,
 				2EBCA7EB1A38F05900B44A09 /* ViewController.h */,
 				2EBCA7EC1A38F05900B44A09 /* ViewController.m */,
+				2EBC2F221A38FA3600B169CD /* short.mp3 */,
 				2EBCA7ED1A38F05900B44A09 /* AAudioPlayer.h */,
 				2EBCA7EE1A38F05900B44A09 /* AAudioPlayer.m */,
 				2EBCA7EF1A38F05900B44A09 /* Main.storyboard */,
@@ -207,6 +210,7 @@
 				2EBCA7F21A38F05900B44A09 /* Main.storyboard in Resources */,
 				2EBCA7D61A38F02F00B44A09 /* LaunchScreen.xib in Resources */,
 				2EBCA7D31A38F02F00B44A09 /* Images.xcassets in Resources */,
+				2EBC2F231A38FA3600B169CD /* short.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -410,6 +414,7 @@
 				2EBCA7E71A38F02F00B44A09 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2EBCA7E81A38F02F00B44A09 /* Build configuration list for PBXNativeTarget "AEAudioPlayerTests" */ = {
 			isa = XCConfigurationList;
@@ -418,6 +423,7 @@
 				2EBCA7EA1A38F02F00B44A09 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

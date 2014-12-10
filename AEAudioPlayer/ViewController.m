@@ -50,7 +50,7 @@
     eqValues = [[NSMutableArray alloc] initWithCapacity:10];
     for( int i=0; i<10; i++)
     {
-        eqValues[i] = @0;
+        eqValues[i] = @(0);
     }
     index = 0;
     
