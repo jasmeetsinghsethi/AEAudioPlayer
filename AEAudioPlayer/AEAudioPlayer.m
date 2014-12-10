@@ -6,14 +6,14 @@
 //  Copyright (c) 2014 Daniel Jackson. All rights reserved.
 //
 
-#import "AAudioPlayer.h"
+#import "AEAudioPlayer.h"
 #import <AVFoundation/AVFoundation.h>
 
 #define DEBUG 1
 
 #define kNumBufferNodes 4
 
-@interface AAudioPlayer ()
+@interface AEAudioPlayer ()
 {
     NSMutableArray* bufferArray;
     AVAudioPCMBuffer* skipBufferCompletion;
@@ -39,7 +39,7 @@
 }
 @end
 
-@implementation AAudioPlayer
+@implementation AEAudioPlayer
 
 - (instancetype)initWithContentsOfURL:(NSURL *)url error:(NSError **)outError
 {

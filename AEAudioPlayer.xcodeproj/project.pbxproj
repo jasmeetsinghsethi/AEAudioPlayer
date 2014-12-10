@@ -14,7 +14,7 @@
 		2EBCA7D61A38F02F00B44A09 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2EBCA7D41A38F02F00B44A09 /* LaunchScreen.xib */; };
 		2EBCA7E21A38F02F00B44A09 /* AEAudioPlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBCA7E11A38F02F00B44A09 /* AEAudioPlayerTests.m */; };
 		2EBCA7F01A38F05900B44A09 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBCA7EC1A38F05900B44A09 /* ViewController.m */; };
-		2EBCA7F11A38F05900B44A09 /* AAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBCA7EE1A38F05900B44A09 /* AAudioPlayer.m */; };
+		2EBCA7F11A38F05900B44A09 /* AEAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2EBCA7EE1A38F05900B44A09 /* AEAudioPlayer.m */; };
 		2EBCA7F21A38F05900B44A09 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2EBCA7EF1A38F05900B44A09 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -42,8 +42,8 @@
 		2EBCA7E11A38F02F00B44A09 /* AEAudioPlayerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AEAudioPlayerTests.m; sourceTree = "<group>"; };
 		2EBCA7EB1A38F05900B44A09 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		2EBCA7EC1A38F05900B44A09 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
-		2EBCA7ED1A38F05900B44A09 /* AAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AAudioPlayer.h; sourceTree = "<group>"; };
-		2EBCA7EE1A38F05900B44A09 /* AAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AAudioPlayer.m; sourceTree = "<group>"; };
+		2EBCA7ED1A38F05900B44A09 /* AEAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AEAudioPlayer.h; sourceTree = "<group>"; };
+		2EBCA7EE1A38F05900B44A09 /* AEAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AEAudioPlayer.m; sourceTree = "<group>"; };
 		2EBCA7EF1A38F05900B44A09 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -91,8 +91,8 @@
 				2EBCA7EB1A38F05900B44A09 /* ViewController.h */,
 				2EBCA7EC1A38F05900B44A09 /* ViewController.m */,
 				2EBC2F221A38FA3600B169CD /* short.mp3 */,
-				2EBCA7ED1A38F05900B44A09 /* AAudioPlayer.h */,
-				2EBCA7EE1A38F05900B44A09 /* AAudioPlayer.m */,
+				2EBCA7ED1A38F05900B44A09 /* AEAudioPlayer.h */,
+				2EBCA7EE1A38F05900B44A09 /* AEAudioPlayer.m */,
 				2EBCA7EF1A38F05900B44A09 /* Main.storyboard */,
 				2EBCA7D21A38F02F00B44A09 /* Images.xcassets */,
 				2EBCA7D41A38F02F00B44A09 /* LaunchScreen.xib */,
@@ -229,7 +229,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2EBCA7F01A38F05900B44A09 /* ViewController.m in Sources */,
-				2EBCA7F11A38F05900B44A09 /* AAudioPlayer.m in Sources */,
+				2EBCA7F11A38F05900B44A09 /* AEAudioPlayer.m in Sources */,
 				2EBCA7CB1A38F02F00B44A09 /* AppDelegate.m in Sources */,
 				2EBCA7C81A38F02F00B44A09 /* main.m in Sources */,
 			);

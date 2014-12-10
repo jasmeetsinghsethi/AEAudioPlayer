@@ -10,18 +10,18 @@
 #import <AVFoundation/AVFoundation.h>
 #import <UIKit/UIKit.h>
 
-@class AAudioPlayer;
+@class AEAudioPlayer;
 
-@protocol AAudioPlayerDelegate <NSObject>
-- (void)audioPlayerDidFinishPlaying:(AAudioPlayer *)player successfully:(BOOL)flag;
+@protocol AEAudioPlayerDelegate <NSObject>
+- (void)audioPlayerDidFinishPlaying:(AEAudioPlayer *)player successfully:(BOOL)flag;
 
 @optional
-- (void)audioPlayerBeginInterruption:(AAudioPlayer *)player;
-- (void)audioPlayerEndInterruption:(AAudioPlayer *)player withOptions:(AVAudioSessionInterruptionOptions)flags;
+- (void)audioPlayerBeginInterruption:(AEAudioPlayer *)player;
+- (void)audioPlayerEndInterruption:(AEAudioPlayer *)player withOptions:(AVAudioSessionInterruptionOptions)flags;
 @end
 
 
-@interface AAudioPlayer : NSObject
+@interface AEAudioPlayer : NSObject
 
 
 - (instancetype)initWithContentsOfURL:(NSURL *)url error:(NSError **)outError;
@@ -38,7 +38,7 @@
 @property (nonatomic) NSTimeInterval currentTime;
 @property (nonatomic, readonly) BOOL playing;
 @property (nonatomic,readonly) NSURL* url;
-@property (nonatomic,weak) id<AAudioPlayerDelegate> delegate;
+@property (nonatomic,weak) id<AEAudioPlayerDelegate> delegate;
 
 @property (nonatomic) AVAudioPlayerNode* player;
 @property (nonatomic) AVAudioFile* file;

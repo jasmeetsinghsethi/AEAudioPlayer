@@ -7,13 +7,13 @@
 //
 
 #import "ViewController.h"
-#import "AAudioPlayer.h"
+#import "AEAudioPlayer.h"
 
-@interface ViewController () <AAudioPlayerDelegate>
+@interface ViewController () <AEAudioPlayerDelegate>
 {
     NSMutableArray* audioFiles;
     int index;
-    AAudioPlayer* player;
+    AEAudioPlayer* player;
     IBOutlet UIProgressView *progressBar;
     
     NSTimer* timer;
@@ -118,7 +118,7 @@
         {
             progressBar.progress = 0.0;
             NSError* playingError = nil;
-            player = [[AAudioPlayer alloc] initWithContentsOfURL:audioFiles[index] error:&playingError frequencies:
+            player = [[AEAudioPlayer alloc] initWithContentsOfURL:audioFiles[index] error:&playingError frequencies:
                       @[ @32, @64, @125, @250, @500, @1000, @2000, @4000, @8000, @16000]];
             
             player.delegate = self;
@@ -194,7 +194,7 @@
     [self playPausePressed:nil];
 }
 
--(void)audioPlayerDidFinishPlaying:(AAudioPlayer *)player successfully:(BOOL)flag
+-(void)audioPlayerDidFinishPlaying:(AEAudioPlayer *)player successfully:(BOOL)flag
 {
     [self nextPressed:nil];
     NSLog(@"Starting new song");
