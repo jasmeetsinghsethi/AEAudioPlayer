@@ -9,7 +9,7 @@
 #import "AEAudioPlayer.h"
 #import <AVFoundation/AVFoundation.h>
 
-#define DEBUG 1
+#define kAE_DEBUG 0
 
 #define kNumBufferNodes 4
 
@@ -44,7 +44,7 @@
 
 - (instancetype)initWithContentsOfURL:(NSURL *)url error:(NSError **)outError
 {
-    NSLog(@"Beginning new player initialization");
+    if(kAE_DEBUG) NSLog(@"Beginning new player initialization");
     return [self initWithContentsOfURL:url error:outError frequencies:@[]];
 }
 
@@ -170,7 +170,7 @@
         _file.framePosition = offset;
         NSLog(@"(%s) EXCEPTION: %@",__PRETTY_FUNCTION__,exception.description);
         
-        if(DEBUG)
+        if(kAE_DEBUG)
         {
             UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:@"EXCEPTION" message:[NSString stringWithFormat:@"(%s) EXCEPTION: %@",__PRETTY_FUNCTION__,exception.description] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
             [alertView show];
@@ -186,7 +186,7 @@
     
     [self stop];
     
-    if(DEBUG) NSLog(@"Initializing");
+    if(kAE_DEBUG) NSLog(@"Initializing");
     
     AVAudioEngine* engine = [self.class sharedEngine];
     
@@ -212,7 +212,7 @@
     
     seekNewTimePosition = offset;
     
-    NSLog(@"(%s) N:%lld / Offset:%lld",__PRETTY_FUNCTION__,seekNewTimePosition,offset);
+    if(kAE_DEBUG) NSLog(@"(%s) N:%lld / Offset:%lld",__PRETTY_FUNCTION__,seekNewTimePosition,offset);
 }
 
 -(void)loadBuffer
@@ -246,7 +246,7 @@
         
         if(bufferArray.count == 0 && !wasInterrupted)
         {
-            if(DEBUG) NSLog(@"Song Finished");
+            if(kAE_DEBUG) NSLog(@"Song Finished");
             if(_delegate && [_delegate respondsToSelector:@selector(audioPlayerDidFinishPlaying:successfully:)])
             {
                 [_delegate audioPlayerDidFinishPlaying:self successfully:true];
@@ -284,7 +284,7 @@
         
         NSLog(@"(%s) EXCEPTION: %@",__PRETTY_FUNCTION__,exception.description);
         
-        if(DEBUG)
+        if(kAE_DEBUG)
         {
             UIAlertView* alert = [[UIAlertView alloc] initWithTitle:@"EXCEPTION" message:[NSString stringWithFormat:@"(%s) EXCEPTION: %@",__PRETTY_FUNCTION__,exception.description] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
             [alert show];
@@ -296,7 +296,7 @@
 
 - (void)finished
 {
-    if(DEBUG) NSLog(@"Finished Playing");
+    if(kAE_DEBUG) NSLog(@"Finished Playing");
 }
 
 - (void)play
@@ -339,7 +339,7 @@
     @catch (NSException *exception) {
     }
     
-    if(DEBUG) NSLog(@"[-(void)play]: seekNewTimeP:%lld SampleRate:%f SampleTime:%lld",seekNewTimePosition, _file.processingFormat.sampleRate, _player.lastRenderTime.sampleTime);
+    if(kAE_DEBUG) NSLog(@"[-(void)play]: seekNewTimeP:%lld SampleRate:%f SampleTime:%lld",seekNewTimePosition, _file.processingFormat.sampleRate, _player.lastRenderTime.sampleTime);
     
     fileSampleRate = _file.fileFormat.sampleRate;
     
@@ -395,7 +395,7 @@
 
 - (void)stop
 {
-    if(DEBUG) NSLog(@"Stopping");
+    if(kAE_DEBUG) NSLog(@"Stopping");
     wasInterrupted = true;
     isAudioInterruption = false;
     
@@ -417,13 +417,13 @@
 
 - (BOOL)playing
 {
-    NSLog(@"[-(BOOL)playing]: %d",_player.isPlaying);
+    if(kAE_DEBUG) NSLog(@"[-(BOOL)playing]: %d",_player.isPlaying);
     return _player.playing;
 }
 
 - (void)dealloc
 {
-    if(DEBUG) NSLog(@"Dealloc");
+    if(kAE_DEBUG) NSLog(@"Dealloc");
     _delegate = nil;
     
     if(_player)
@@ -451,7 +451,7 @@
 
 - (void)setCurrentTime:(NSTimeInterval)currentTime
 {
-    if(DEBUG) NSLog(@"Seeking To Location: %f",currentTime);
+    if(kAE_DEBUG) NSLog(@"Seeking To Location: %f",currentTime);
     
     BOOL isPlaying = [_player isPlaying];
     
@@ -469,7 +469,7 @@
      
      double sampleRate = _file.fileFormat.sampleRate;
      AVAudioFramePosition framePosition = (long long)(currentTime * sampleRate);
-     if(DEBUG) NSLog(@"FRAME: %lld %lld", _file.framePosition, framePosition);
+     if(kAE_DEBUG) NSLog(@"FRAME: %lld %lld", _file.framePosition, framePosition);
      
      NSError* startError = nil;
      
