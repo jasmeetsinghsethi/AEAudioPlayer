@@ -35,8 +35,17 @@
     BOOL isPaused;
     NSTimeInterval pausedTime;
     
-    //used to prevent multiple interruption notifications
     BOOL isAudioInterruption;
+    
+    CGFloat filterPan;
+    CGFloat filterOverallGain;
+    
+    BOOL filterBandPassBypass;
+    BOOL filterHighPassBypass;
+    BOOL filterLowPassBypass;
+    CGFloat filterBandPassFreq;
+    CGFloat filterHighPassFreq;
+    CGFloat filterLowPassFreq;
 }
 @end
 
@@ -69,6 +78,9 @@
         [[NSNotificationCenter defaultCenter] removeObserver:self name:AVAudioSessionInterruptionNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(notification:) name:
          AVAudioSessionInterruptionNotification object:nil];
+        
+        filterPan = 0.0;
+        filterOverallGain = 0.0;
     }
     return self;
 }
@@ -117,22 +129,89 @@
 
 - (void)setParamIndex:(int)index
 {
-    AVAudioUnitEQFilterParameters* filterParameters = eq.bands[index];
-    
-    NSNumber* currentFreq = frequencies[index];
-    NSNumber* currentFreqGain = frequencyGains[index];
-    
-    filterParameters.filterType = AVAudioUnitEQFilterTypeParametric;
-    filterParameters.frequency = currentFreq.intValue;
-    filterParameters.bandwidth = 1.0;
-    filterParameters.bypass = false;
-    filterParameters.gain = currentFreqGain.floatValue;
+    if(_player != nil && eq != nil) {
+        AVAudioUnitEQFilterParameters* filterParameters = eq.bands[index];
+        
+        NSNumber* currentFreq = frequencies[index];
+        NSNumber* currentFreqGain = frequencyGains[index];
+        
+        filterParameters.filterType = AVAudioUnitEQFilterTypeParametric;
+        filterParameters.frequency = currentFreq.intValue;
+        filterParameters.bandwidth = 1.0;
+        filterParameters.bypass = false;
+        filterParameters.gain = currentFreqGain.floatValue;
+    }
 }
 
 - (void)setEqGain:(CGFloat)gain forBand:(int)bandIndex
 {
     frequencyGains[bandIndex] = @(gain);
     [self setParamIndex:bandIndex];
+}
+
+- (void)setPan:(CGFloat)pan {
+    filterPan = pan;
+    if(_player != nil)
+        _player.pan = pan;
+}
+- (void)setOverallGain:(CGFloat)overallGain {
+    filterOverallGain = overallGain;
+    if(_player != nil && eq != nil)
+        eq.globalGain = overallGain;
+}
+
+- (void)setBandPassAtIndex:(int)bandIndex
+{
+    if(_player != nil && eq != nil) {
+        AVAudioUnitEQFilterParameters* filterParameters = eq.bands[bandIndex];
+        
+        filterParameters.filterType = AVAudioUnitEQFilterTypeBandPass;
+        filterParameters.frequency = filterBandPassFreq;
+        filterParameters.bandwidth = 0.5;
+        filterParameters.bypass = filterBandPassBypass;
+    }
+}
+
+- (void)setBandPassFrequency:(CGFloat)freq bypass:(BOOL)bypass {
+    filterBandPassFreq = freq;
+    filterBandPassBypass = bypass;
+    [self setBandPassAtIndex:(int)frequencies.count];
+}
+
+- (void)setHighPassAtIndex:(int)bandIndex
+{
+    if(_player != nil && eq != nil) {
+        AVAudioUnitEQFilterParameters* filterParameters = eq.bands[bandIndex];
+        
+        filterParameters.filterType = AVAudioUnitEQFilterTypeHighPass;
+        filterParameters.frequency = filterHighPassFreq;
+        filterParameters.bandwidth = 0.5;
+        filterParameters.bypass = filterHighPassBypass;
+    }
+}
+
+- (void)setHighPassFrequency:(CGFloat)freq bypass:(BOOL)bypass {
+    filterHighPassFreq = freq;
+    filterHighPassBypass = bypass;
+    [self setHighPassAtIndex:(int)frequencies.count+1];
+}
+
+- (void)setLowPassAtIndex:(int)bandIndex
+{
+    if(_player != nil && eq != nil) {
+        AVAudioUnitEQFilterParameters* filterParameters = eq.bands[bandIndex];
+        
+        filterParameters.filterType = AVAudioUnitEQFilterTypeLowPass;
+        filterParameters.frequency = filterLowPassFreq;
+        filterParameters.bandwidth = 0.5;
+        filterParameters.bypass = filterLowPassBypass;
+    }
+}
+
+- (void)setLowPassFrequency:(CGFloat)freq bypass:(BOOL)bypass {
+    filterLowPassFreq = freq;
+    filterLowPassBypass = bypass;
+    [self setLowPassAtIndex:(int)frequencies.count+2];
 }
 
 - (void)initializePlayerNodeError:(NSError**)outError offset:(AVAudioFramePosition)offset {
@@ -143,25 +222,25 @@
     
     [engine attachNode:_player];
     
-    if(frequencies.count == 0)
+    int extraBands = 3;
+    
+    eq = [[AVAudioUnitEQ alloc] initWithNumberOfBands:frequencies.count + extraBands];
+    [engine attachNode:eq];
+    
+    for( int i=0; i < frequencies.count; i++)
     {
-        [engine connect:_player to:[engine mainMixerNode] format:_file.processingFormat];
+        [self setParamIndex:i];
     }
-    else
-    {
-        eq = [[AVAudioUnitEQ alloc] initWithNumberOfBands:frequencies.count];
-        [engine attachNode:eq];
-        
-        for( int i=0; i < frequencies.count; i++)
-        {
-            [self setParamIndex:i];
-        }
-        
-        eq.globalGain = 1.0;
-        
-        [engine connect:_player to:eq format:_file.processingFormat];
-        [engine connect:eq to:[engine mainMixerNode] format:_file.processingFormat];
-    }
+    
+    [self setBandPassAtIndex:(int)frequencies.count];
+    [self setHighPassAtIndex:(int)frequencies.count+1];
+    [self setLowPassAtIndex:(int)frequencies.count+2];
+    
+    eq.globalGain = filterOverallGain;
+    _player.pan = filterPan;
+    
+    [engine connect:_player to:eq format:_file.processingFormat];
+    [engine connect:eq to:[engine mainMixerNode] format:_file.processingFormat];
     
     @try {
         _file.framePosition = offset;

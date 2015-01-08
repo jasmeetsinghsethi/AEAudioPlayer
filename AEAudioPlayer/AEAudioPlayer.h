@@ -31,7 +31,23 @@
 - (void)pause;
 - (void)stop;
 
+/// -96 -> 24 db. Setup the bands in initialization.
 - (void)setEqGain:(CGFloat)gain forBand:(int)bandIndex;
+
+/// -1.0 -> 1.0
+- (void)setPan:(CGFloat)pan;
+
+/// -96 -> 24 db
+- (void)setOverallGain:(CGFloat)overallGain;
+
+/// Set the frequency and the bypass (false for enabled, otherwise true)
+- (void)setBandPassFrequency:(CGFloat)freq bypass:(BOOL)bypass;
+
+/// Set the frequency and the bypass (false for enabled, otherwise true)
+- (void)setHighPassFrequency:(CGFloat)freq bypass:(BOOL)bypass;
+
+/// Set the frequency and the bypass (false for enabled, otherwise true)
+- (void)setLowPassFrequency:(CGFloat)freq bypass:(BOOL)bypass;
 
 
 @property (nonatomic) NSTimeInterval duration;
